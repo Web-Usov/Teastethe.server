@@ -62,3 +62,5 @@ typings/
 
 #VSCode
 .vscode
+/.vscode
+vscode
