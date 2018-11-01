@@ -20,5 +20,7 @@ function time(){
         minute: 'numeric',
         second: 'numeric'
     }
-    return new Date().toLocaleString("ru", options);
+    let date =  new Date();
+    date.setHours(date.getUTCHours()+4);
+    return date.toLocaleString("ru", options)
 }
