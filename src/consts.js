@@ -11,16 +11,7 @@ export const SOCKET = time() + " [SOCKET]"
 export const SOCKET_TIME_OUT = 1000 * 20
 
 function time(){
-    const options = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        timezone: 'UTC',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-    }
     let date =  new Date();
     date.setHours(date.getUTCHours()+4);
-    return date.toLocaleString("ru", options)
+    return date.getFullYear() + '-' +  date.getMonth() +'-' + date.getDay()+ ' '+ (date.getHours() < 10 ? '0' : '') + date.getHours() + ':' + date.getMinutes() + ':' + (date.getSeconds() < 10 ? '0' : '') + date.getSeconds();
 }
