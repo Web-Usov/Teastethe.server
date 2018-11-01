@@ -11,8 +11,8 @@ export const SOCKET = time() + " [SOCKET]"
 export const SOCKET_TIME_OUT = 1000 * 20
 
 function time(){
-    let date =  new Date();
-    var options = {
+    const date =  new Date();
+    const options = {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
@@ -20,6 +20,10 @@ function time(){
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric'
-      }   
-    return date.toLocaleString("ru", options) 
+    }
+
+    console.log(-date.getTimezoneOffset()/60);
+    
+    
+    return date.toLocaleDateString("en-US", options)
 }
