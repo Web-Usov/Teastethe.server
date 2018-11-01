@@ -21,8 +21,12 @@ function time(){
         minute: 'numeric',
         second: 'numeric'
     }
+    
+    const timezone = date.getTimezoneOffset()/60 
 
-    console.log(-date.getTimezoneOffset()/60);
+    if(date.getTimezoneOffset()/60 !== -4)
+        date.setHours(date.getHours+4+timezone)
+    
     
     
     return date.toLocaleDateString("en-US", options)
