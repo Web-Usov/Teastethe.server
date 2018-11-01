@@ -1,5 +1,3 @@
-
-
 // Strings
 
 export const INFO = time() + " [INFO]"
@@ -8,7 +6,9 @@ export const SOCKET = time() + " [SOCKET]"
 
 // Values
 
-export const SOCKET_TIME_OUT = 1000 * 20
+export const SOCKET_TIME_OUT = 1000 * 60 * 30
+
+// Support functions
 
 function time(){
     const date =  new Date();
@@ -21,13 +21,7 @@ function time(){
         minute: 'numeric',
         second: 'numeric'
     }
-
     const timezone = date.getTimezoneOffset()/60 
-
-    if(date.getTimezoneOffset()/60 !== -4)
-        date.setHours(date.getHours()+4+timezone)
-    
-    
-    
+    date.setHours(date.getHours()+4+timezone)    
     return date.toLocaleDateString("en-US", options)
 }
