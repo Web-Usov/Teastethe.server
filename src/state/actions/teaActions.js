@@ -13,7 +13,7 @@ export const addTea = (data, cb) => {
     const tea = new Tea(data)
     store.teas[tea.id] = tea
     store.teasId.push(tea.id)
-    console.log(INFO,"Add new tea", tea.name)
+    console.log(INFO(),"Add new tea", tea.name)
     cb({
         error:null,
         tea:store.teas[tea.id]

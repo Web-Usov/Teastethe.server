@@ -35,7 +35,7 @@ export const login = (data,cb) =>{
 
 export const createUser = (data) =>{
     const {socket,name} = data
-    console.log(INFO,"User",name,"login");
+    console.log(INFO(),"User",name,"login");
     store.usersId.push(socket.id)
     store.users[socket.id] = new User({
         id:socket.id,
@@ -44,7 +44,7 @@ export const createUser = (data) =>{
 }
 
 export const deleteUser = (id) => {
-    console.log(INFO,"User",store.users[id].name,"left"); 
+    console.log(INFO(),"User",store.users[id].name,"left"); 
     delete store.users[id]
     const indexToRemove = store.usersId.indexOf(id);
     store.usersId.splice(indexToRemove , 1)
