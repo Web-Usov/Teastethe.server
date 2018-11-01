@@ -21,11 +21,11 @@ function time(){
         minute: 'numeric',
         second: 'numeric'
     }
-    
+
     const timezone = date.getTimezoneOffset()/60 
 
     if(date.getTimezoneOffset()/60 !== -4)
-        date.setHours(date.getHours+4+timezone)
+        date.setHours(date.getHours()+4+timezone)
     
     
     
