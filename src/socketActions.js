@@ -1,5 +1,6 @@
 import {teaActions, userActions} from './state/actions'
 import {store} from './state'
+import * as consts from './consts'
 
 export default (socket) =>{
     
