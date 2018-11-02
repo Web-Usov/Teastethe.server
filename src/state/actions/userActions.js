@@ -1,6 +1,6 @@
 import store from '../store'
 import {User} from '../models'
-import {INFO} from '../../consts'
+import * as consts from '../../consts'
 
 
 
