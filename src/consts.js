@@ -3,6 +3,7 @@
 export const INFO   = () => (time() + " [INFO]")
 export const ERROR  = () => (time() + " [ERROR]")
 export const SOCKET = () => (time() + " [SOCKET]")
+export const ACTION = () => (time() + " [ACTION]")
 
 // Values
 

@@ -6,7 +6,9 @@ import socketActions from './socketActions'
 // store.add("teas", {name:"TESS - raspberry",type:"black - berry"})
 // store.add("teas", {name:"TESS - lemon",type:"green - fruit"})
 teaActions.addTea({name:"TESS - raspberry",type:"black - berry"},(data) => {
+    console.log(consts.ACTION(),"app_1")
     if(data.error){
+        console.log(consts.ACTION(),"app_2")
         console.log(consts.ERROR(),data.error)        
     }    
 })
@@ -23,6 +25,7 @@ io.on('connection', socket => {
     })
 
     socket.on('disconnect',() => {
+        console.log(consts.ACTION(),"app_3")
         console.log(consts.SOCKET(),"Disconnected",socket.id)     
     })
 
