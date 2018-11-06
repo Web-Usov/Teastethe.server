@@ -1,9 +1,9 @@
 // Strings
 
-export const INFO   = () => (time() + " [INFO]")
-export const ERROR  = () => (time() + " [ERROR]")
-export const SOCKET = () => (time() + " [SOCKET]")
-export const ACTION = () => (time() + " [ACTION]")
+export const INFO   = () => (  " [INFO]")
+export const ERROR  = () => (  " [ERROR]")
+export const SOCKET = () => (  " [SOCKET]")
+export const ACTION = () => (  " [ACTION]")
 
 // Values
 
