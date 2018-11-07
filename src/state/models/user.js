@@ -1,4 +1,5 @@
-import mongoose, {Schema} from 'mongoose'
+const  mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const user = new Schema(
     {
@@ -12,7 +13,9 @@ const user = new Schema(
         },
         socketID:{
             type:String,
-            required:true
+            required:true,
+            minlength:3,
+            maxlength:16
         }
     },
     {
@@ -20,4 +23,4 @@ const user = new Schema(
     }
 )
 
-export default mongoose.model("User", user)
+module.exports = mongoose.model("User", user)

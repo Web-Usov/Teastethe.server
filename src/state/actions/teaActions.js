@@ -1,23 +1,24 @@
-import {Tea} from '../models'
+const Tea = require('../models/tea')
 
-export const addTea = (props, cb) => {
-    
+const addTea = (props, cb) => {    
     const {name,type} = props
-    if(name.length > 24 || name.length < 3)
-        return cb({error:"Name must be less than 24 characters and longer than 3 characters"})
-
     Tea.create({
         name,
         type
     },(error,docs) =>{
-        if(error) return cb(error)
-        return cb(null,docs)
+        if(error) cb(error)
+        else cb(null,docs)
     })
 }
 
-export const getAllTeas = (cb) => {
+const getAllTeas = (cb) => {
     Tea.find({},(error, docs) => {
-        if(error) return cb(error)
-        return cb(null,docs)
+        if(error) cb(error)
+        else cb(null,docs)
     })
 } 
+
+module.exports = {
+    addTea,
+    getAllTeas
+}

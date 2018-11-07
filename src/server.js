@@ -1,20 +1,21 @@
-import express from 'express'
-import http from 'http'
-import SocketIO from 'socket.io'
-import db from './db'
+const express = require('express')
+const http = require('http')
+const SocketIO = require('socket.io')
+const db = require('./db')
+require('dotenv').config()
 
 const app = express();
 const server = http.Server(app);
 const io = new SocketIO(server);
-const port = process.env.PORT || 3100;
+const port = process.env.PORT || 3000;
 
 db().then(info => {
-  console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
-  server.listen(port, () => {
-    console.log('Listening on *:' + port);
-  });
-}).catch(() => {
-  console.error('Unable to connect to database :(')  
+    console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    server.listen(port, () => {
+      console.log('Listening on *:' + port);
+    });
+  }).catch(() => {
+    console.error('Unable to connect to database :(')  
 })
 
-export {io}
+module.exports = io

@@ -1,5 +1,5 @@
-import {io} from './server'
-import socketEvents from './socketEvents'
+const io = require('./server')
+const socketEvents = require('./socketEvents')
 
 
 io.on('connection', socket => {

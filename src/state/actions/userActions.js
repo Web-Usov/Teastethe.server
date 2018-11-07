@@ -1,16 +1,9 @@
-import {User} from '../models'
+const User = require('../models/user')
 
-
-export const login  = (props, cb) => {
-    const {name} = props
-    if(name.length > 16){
-        return cb("Name must be less than 16 characters and longer than 3 characters")
-    }
+const login  = (props, cb) => {
     createUser(props,(error, answer) =>{
-        if(error!==null){
-            return cb(error)
-        }
-        return cb(null, answer)
+        if(error!==null) cb(error)
+        else cb(null, answer)
     })
 }
 
@@ -20,14 +13,20 @@ const createUser = (props,cb) =>{
         name,
         socketID
     }, (error,docs) => {
-        if(error) return cb(error)
+        if(error) cb(error)
+        else cb(null)
     })
-    return cb(null)
 }
-export const deleteUser = (props, cb) =>{
+
+const deleteUser = (props, cb) =>{
     const {socketID} = props
     User.remove({socketID},(error, docs) => {
-        if(error) return cb(error)
+        if(error) cb(error)
+        else cb(null)
     })
-    return cb(null)
+}
+
+module.exports = {
+    login,
+    deleteUser
 }

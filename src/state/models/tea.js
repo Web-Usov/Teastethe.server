@@ -1,14 +1,19 @@
-import mongoose, {Schema} from 'mongoose'
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const tea = new Schema(
     {
         name:{
             type:String,
-            required:true
+            required:true,
+            minlength:3,
+            maxlength:24
         },
         type:{
             type:String,
-            default:"Default"
+            default:"Default",
+            minlength:3,
+            maxlength:24
         },
         reating:{
             type:Number,
@@ -17,4 +22,4 @@ const tea = new Schema(
     }
 )
 
-export default mongoose.model("Tea", tea);
+module.exports =  mongoose.model("Tea", tea);

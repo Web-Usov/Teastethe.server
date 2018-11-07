@@ -1,7 +1,7 @@
-import * as userActions from './userActions'
-import * as teaActions from './teaActions'
+const userActions = require('./userActions')
+const teaActions = require('./teaActions')
 
-export {
+module.exports =  {
     userActions,
     teaActions
 }

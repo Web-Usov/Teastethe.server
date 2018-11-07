@@ -1,61 +1,54 @@
-import {teaActions, userActions} from './state/actions'
+const  actions = require('./state/actions')
 
-export default (socket) =>{
+module.exports = (socket) =>{
     socket.on('login', (name) => {
-        userActions.login(
+        actions.userActions.login(
             {
                 name,
                 socketID:socket.id
             },
             (error, answer) => {
-                if(error!==null){
-                    return socket.emit('login',{error})
+                if(error!==null) socket.emit('login',{error})
+                else{
+                    socket.emit('login',{
+                        error:null,
+                        name
+                    })
+    
+                    socket.on('disconnect',() => {
+                        actions.userActions.deleteUser({socketID:socket.id},(error, answer) => {
+                            if(error) console.error(error)
+                            else console.log("User left - ",name)           
+                        })   
+                    })
                 }
-                socket.emit('login',{
-                    error:null,
-                    name
-                })
-
-                socket.on('disconnect',() => {
-                    userActions.deleteUser({socketID:socket.id},(error, answer) => {
-                        if(error) console.error(error)
-                        else console.log("User left - ",name)           
-                    })   
-                })
             }
         )        
     })
 
     socket.on('allTeas', () => {
         
-        teaActions.getAllTeas((error, answer) => {
-            if(error) return socket.emit({error})
-            return socket.emit('allTeas',{
-                teas:answer
-            })
-        })
-
-        
+        actions.teaActions.getAllTeas((error, answer) => {
+            if(error) socket.emit({error})
+            else socket.emit('allTeas',{teas:answer})
+        })        
     })
 
     socket.on('addTea',(tea) => {
-        teaActions.addTea(tea,(error, answer)=>{
-            if(error){
-                return socket.emit('addTea',{
-                    error
-                })     
-            }
-            
-            socket.broadcast.emit('addTea',{
-                error:null,
-                tea:answer,
-                isYourTea:false
-            })
-            socket.emit('addTea',{
-                error:null,
-                tea:answer,
-                isYourTea:true
-            })
+        actions.teaActions.addTea(tea,(error, answer)=>{
+            if(error) socket.emit('addTea',{error})  
+            else {
+                socket.broadcast.emit('addTea',{
+                    error:null,
+                    tea:answer,
+                    isYourTea:false
+                })
+                socket.emit('addTea',{
+                    error:null,
+                    tea:answer,
+                    isYourTea:true
+                })
+            }            
         })
     })
 }
