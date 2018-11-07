@@ -5,7 +5,9 @@ const user = new Schema(
     {
         name:{
             type:String,
-            required:true
+            required:true,
+            minlength:3,
+            maxlength:16
         },
         teas_List:{
             type:Array,
@@ -14,8 +16,6 @@ const user = new Schema(
         socketID:{
             type:String,
             required:true,
-            minlength:3,
-            maxlength:16
         }
     },
     {
