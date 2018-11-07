@@ -6,14 +6,14 @@ const addTea = (props, cb) => {
         name,
         type
     },(error,docs) =>{
-        if(error) cb(error)
+        if(error) cb(error.message)
         else cb(null,docs)
     })
 }
 
 const getAllTeas = (cb) => {
     Tea.find({},(error, docs) => {
-        if(error) cb(error)
+        if(error) cb(error.message)
         else cb(null,docs)
     })
 } 
