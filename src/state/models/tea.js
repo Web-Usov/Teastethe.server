@@ -18,6 +18,16 @@ const tea = new Schema(
         reating:{
             type:Number,
             default:0.0
+        },
+        parent:{
+            id:{
+                type:Number,
+                default:0
+            },
+            name:{
+                type:String,
+                default:"System"
+            }
         }
     }
 )

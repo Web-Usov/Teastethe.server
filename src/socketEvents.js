@@ -1,6 +1,6 @@
-const  actions = require('./state/actions')
+const actions = require('./state/actions')
 
-module.exports = (socket) =>{
+module.exports = (io,socket) =>{
     socket.on('login', (name) => {
         actions.userActions.login(
             {
@@ -39,16 +39,26 @@ module.exports = (socket) =>{
             if(error) socket.emit('addTea',{error})  
             else {
                 socket.broadcast.emit('addTea',{
-                    error:null,
                     tea:answer,
                     isYourTea:false
                 })
                 socket.emit('addTea',{
-                    error:null,
                     tea:answer,
                     isYourTea:true
                 })
             }            
+        })
+    })
+
+    socket.on('deleteTea', (teaId) => {
+        actions.teaActions.deleteTea(teaId, (error, answer) => {
+            if(error) socket.emit('deleteTea', {error})
+            else{
+                io.emit('deleteTea',{
+                    teaId,
+                    socketId:socket.id
+                })
+            }
         })
     })
 }

@@ -14,7 +14,11 @@ const createUser = (props,cb) =>{
         socketID
     }, (error,docs) => {
         
-        if(error) cb(error.message)
+        if(error) {
+            console.error(error)
+            
+            cb(error.message)
+        }
         else cb(null)
     })
 }

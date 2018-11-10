@@ -6,17 +6,24 @@ const user = new Schema(
         name:{
             type:String,
             required:true,
+            unique:true,
             minlength:3,
             maxlength:16
         },
-        teas_List:{
-            type:Array,
-            default:[]
+        password:{
+            type:String,
+            minlength:4,
+            maxlength:16
         },
         socketID:{
             type:String,
             required:true,
-        }
+            unique:true,
+        },
+        teasAdded:{
+            type:Array,
+            default:[]
+        },
     },
     {
         versionKey: false 

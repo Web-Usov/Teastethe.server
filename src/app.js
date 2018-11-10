@@ -1,6 +1,8 @@
 const io = require('./server')
 const socketEvents = require('./socketEvents')
+const serverActions = require('./state/actions/serverActions')
 
+serverActions.deleteAllUsers()
 
 io.on('connection', socket => {
     console.log("Connected",socket.id)
@@ -13,5 +15,5 @@ io.on('connection', socket => {
         console.log("Disconnected",socket.id)     
     })
 
-    socketEvents(socket)
+    socketEvents(io,socket)
 })
