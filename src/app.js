@@ -1,6 +1,6 @@
 const io = require('./server')
-const socketEvents = require('./socketEvents')
-const serverActions = require('./state/actions/serverActions')
+const socketEvents = require('./actions/socketActions')
+const serverActions = require('./actions/serverActions')
 
 serverActions.deleteAllUsers()
 

@@ -1,4 +1,4 @@
-const actions = require('./state/actions')
+const actions = require('.')
 
 module.exports = (io,socket) =>{
     socket.on('login', (name) => {
