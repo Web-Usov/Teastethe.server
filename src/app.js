@@ -1,11 +1,19 @@
-const io = require('./server')
+const {io} = require('./server')
 const socketEvents = require('./actions/socketActions')
-const serverActions = require('./actions/serverActions')
+const {serverActions, userActions} = require('./actions')
 
-serverActions.deleteAllUsers()
+// serverActions.deleteAllUsers()
+// userActions.createUser({name:"Vasa", socketID:"12345"},(error,data)=>{
+//     if(error) console.log(error);
+//     else console.log(data)    
+// })
+
+
 
 io.on('connection', socket => {
+    
     console.log("Connected",socket.id)
+    // console.log("headers:",socket.handshake.headers);
     
     socket.on('error', (error) => {
         console.error(error)      
@@ -16,4 +24,5 @@ io.on('connection', socket => {
     })
 
     socketEvents(io,socket)
+    
 })

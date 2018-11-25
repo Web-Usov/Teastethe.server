@@ -13,12 +13,7 @@ const user = new Schema(
         password:{
             type:String,
             minlength:4,
-            maxlength:16
-        },
-        socketID:{
-            type:String,
-            required:true,
-            unique:true,
+            maxlength:16,
         },
         teasAdded:{
             type:Array,

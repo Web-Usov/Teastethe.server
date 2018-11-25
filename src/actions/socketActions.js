@@ -1,41 +1,71 @@
-const actions = require('.')
+const {userActions, teaActions} = require('.')
 
 module.exports = (io,socket) =>{
-    socket.on('login', (name) => {
-        actions.userActions.login(
-            {
-                name,
-                socketID:socket.id
-            },
-            (error, answer) => {
-                if(error!==null) socket.emit('login',{error})
-                else{
-                    socket.emit('login',{
-                        error:null,
-                        name
-                    })
+    let sUser = socket.handshake.session.user;
+    console.log('INIT', socket.handshake.session.user);
     
-                    socket.on('disconnect',() => {
-                        actions.userActions.deleteUser({socketID:socket.id},(error, answer) => {
-                            if(error) console.error(error)
-                            else console.log("User left - ",name)           
-                        })   
-                    })
-                }
-            }
-        )        
+    socket.on('getUser',()=>{
+        if(sUser)
+            userActions.getUser(sUser,(error, user) => {
+                if (error) socket.emit('getUser', {error})
+                else socket.emit('getUser',{
+                    error:null,
+                    user             
+                })
+            })
+        else socket.emit('getUser',{
+            error:'You are not authorized',
+        })
     })
+    socket.on('login', (data) => {
+        if(sUser) return socket.emit('login',{
+            error:'You are already logged in.'
+        })
+        const {name} = data
+        userActions.login({name},(error, answer) => {
+            if(error) return socket.emit('login',{error})
+            socket.handshake.session.user = answer._id;
+            socket.handshake.session.save();
+            sUser = socket.handshake.session.user;    
+            
+            socket.emit('login',{
+                error:null,
+                user:answer
+            })
+        })                            
+    })
+    socket.on('register',(data) =>{
+        if(sUser) return socket.emit('register',{
+            error:'You must logout before registering'
+        })
+        userActions.register((data), (error, answer) => {
+            if(error) return socket.emit('register',{error})   
+            socket.emit('register',({
+                error:null,
+                message:"You have successfully registered"
+            }))         
+        })
+    })
+    socket.on('logout',()=>{
+        if(sUser){
+            socket.emit('logout')
+            delete socket.handshake.session.user;
+            socket.handshake.session.save();
+            sUser = socket.handshake.session.user; 
+        }
+    }) 
 
     socket.on('allTeas', () => {
-        
-        actions.teaActions.getAllTeas((error, answer) => {
+        if(!sUser) return new Error('E-allTeas: User is not authorized')
+        teaActions.getAllTeas((error, answer) => {
             if(error) socket.emit({error})
             else socket.emit('allTeas',{teas:answer})
         })        
     })
 
     socket.on('addTea',(tea) => {
-        actions.teaActions.addTea(tea,(error, answer)=>{
+        if(!sUser) return new Error('E-addTea: User is not authorized')
+        teaActions.addTea(tea,(error, answer)=>{
             if(error) socket.emit('addTea',{error})  
             else {
                 socket.broadcast.emit('addTea',{
@@ -51,7 +81,8 @@ module.exports = (io,socket) =>{
     })
 
     socket.on('deleteTea', (teaId) => {
-        actions.teaActions.deleteTea(teaId, (error, answer) => {
+        if(!sUser) return new Error('E-deleteTea: User is not authorized')
+        teaActions.deleteTea(teaId, (error, answer) => {
             if(error) socket.emit('deleteTea', {error})
             else{
                 io.emit('deleteTea',{

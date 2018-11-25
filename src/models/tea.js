@@ -29,6 +29,8 @@ const tea = new Schema(
                 default:"System"
             }
         }
+    }, {
+        versionKey: false,
     }
 )
 
