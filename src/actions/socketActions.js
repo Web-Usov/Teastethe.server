@@ -76,21 +76,23 @@ module.exports = (io,socket) =>{
                     name:answer.name,
                 },
             }
+            
+            teaActions.addTea(tea,(error, answer)=>{
+                if(error) socket.emit('addTea',{error})  
+                else {
+                    socket.broadcast.emit('addTea',{
+                        tea:answer,
+                        isYourTea:false
+                    })
+                    socket.emit('addTea',{
+                        tea:answer,
+                        isYourTea:true
+                    })
+                }            
+            })
         })
         
-        teaActions.addTea(tea,(error, answer)=>{
-            if(error) socket.emit('addTea',{error})  
-            else {
-                socket.broadcast.emit('addTea',{
-                    tea:answer,
-                    isYourTea:false
-                })
-                socket.emit('addTea',{
-                    tea:answer,
-                    isYourTea:true
-                })
-            }            
-        })
+        
     })
 
     socket.on('deleteTea', (teaId) => {
