@@ -21,8 +21,8 @@ const tea = new Schema(
         },
         parent:{
             id:{
-                type:mongoose.Schema.Types.ObjectId,
-                default:0
+                type:String,
+                default:"0"
             },
             name:{
                 type:String,
