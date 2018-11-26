@@ -65,6 +65,12 @@ module.exports = (io,socket) =>{
 
     socket.on('addTea',(tea) => {
         if(!sUser) return new Error('E-addTea: User is not authorized')
+        userActions.getUser(sUser, (error, answer) => {
+            if(error) return socket.emit('addTea', {error})
+            tea.parent.id = sUser
+            tea.parent.name = answer.name
+        })
+        
         teaActions.addTea(tea,(error, answer)=>{
             if(error) socket.emit('addTea',{error})  
             else {
@@ -83,13 +89,11 @@ module.exports = (io,socket) =>{
     socket.on('deleteTea', (teaId) => {
         if(!sUser) return new Error('E-deleteTea: User is not authorized')
         teaActions.deleteTea(teaId, (error, answer) => {
-            if(error) socket.emit('deleteTea', {error})
-            else{
-                io.emit('deleteTea',{
-                    teaId,
-                    socketId:socket.id
-                })
-            }
+            if(error) return socket.emit('deleteTea', {error})
+            io.emit('deleteTea',{
+                teaId,
+                socketId:socket.id
+            })
         })
     })
 }

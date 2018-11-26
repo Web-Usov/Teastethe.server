@@ -5,7 +5,7 @@ const tea = new Schema(
     {
         name:{
             type:String,
-            required:true,
+            required:[true,"Name field must be filled"],
             minlength:3,
             maxlength:24
         },
@@ -21,7 +21,7 @@ const tea = new Schema(
         },
         parent:{
             id:{
-                type:Number,
+                type:mongoose.Schema.Types.ObjectId,
                 default:0
             },
             name:{

@@ -58,6 +58,7 @@ const deleteUser = (props, cb) =>{
     })
 }
 
+
 module.exports = {
     login,
     deleteUser,
