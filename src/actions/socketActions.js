@@ -67,7 +67,9 @@ module.exports = (io,socket) =>{
         if(!sUser) return new Error('E-addTea: User is not authorized')
         userActions.getUser(sUser, (error, answer) => {
             if(error) return socket.emit('addTea', {error})
-            tea.parent.id = sUser
+            console.log(tea, answer);
+            
+            tea.parent.id = answer._id
             tea.parent.name = answer.name
         })
         

@@ -13,7 +13,6 @@ const {serverActions, userActions} = require('./actions')
 io.on('connection', socket => {
     
     console.log("Connected",socket.id)
-    // console.log("headers:",socket.handshake.headers);
     
     socket.on('error', (error) => {
         console.error(error)      
