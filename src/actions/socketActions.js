@@ -69,8 +69,13 @@ module.exports = (io,socket) =>{
             if(error) return socket.emit('addTea', {error})
             console.log(tea, answer);
             
-            tea.parent.id = answer._id
-            tea.parent.name = answer.name
+            tea = {
+                ...tea,
+                parent:{
+                    id:answer._id,
+                    name:answer.name,
+                },
+            }
         })
         
         teaActions.addTea(tea,(error, answer)=>{
