@@ -1,16 +1,22 @@
 {
-  "name": "server",
-  "version": "0.1-beta",
+  "name": "Tea.server",
+  "version": "0.2.0-prod",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-mongo": "^2.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "express-socket.io-session": "^1.3.5",
+    "mongoose": "^5.3.10",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
