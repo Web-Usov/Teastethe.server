@@ -5,7 +5,7 @@ const tea = new Schema(
     {
         name:{
             type:String,
-            required:[true,"Name field must be filled"],
+            required:[true,"Name field required"],
             minlength:3,
             maxlength:24
         },

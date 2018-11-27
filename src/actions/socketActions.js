@@ -7,13 +7,14 @@ module.exports = (io,socket) =>{
     socket.on('getUser',()=>{
         if(sUser)
             userActions.getUser(sUser,(error, user) => {
-                if (error) socket.emit('getUser', {error})
-                else socket.emit('getUser',{
+                if (error) return socket.emit('getUser', {error})
+                socket.emit('getUser',{
                     error:null,
                     user             
                 })
             })
-        else socket.emit('getUser',{
+            
+        socket.emit('getUser',{
             error:'You are not authorized',
         })
     })
@@ -58,8 +59,8 @@ module.exports = (io,socket) =>{
     socket.on('allTeas', () => {
         if(!sUser) return new Error('E-allTeas: User is not authorized')
         teaActions.getAllTeas((error, answer) => {
-            if(error) socket.emit({error})
-            else socket.emit('allTeas',{teas:answer})
+            if(error) return socket.emit({error})
+            socket.emit('allTeas',{teas:answer})
         })        
     })
 
@@ -78,17 +79,9 @@ module.exports = (io,socket) =>{
             }
             
             teaActions.addTea(tea,(error, answer)=>{
-                if(error) socket.emit('addTea',{error})  
-                else {
-                    socket.broadcast.emit('addTea',{
-                        tea:answer,
-                        isYourTea:false
-                    })
-                    socket.emit('addTea',{
-                        tea:answer,
-                        isYourTea:true
-                    })
-                }            
+                if(error) return socket.emit('addTea',{error})  
+                socket.broadcast.emit('addTea.b',{tea:answer})
+                socket.emit('addTea',{tea:answer})                          
             })
         })
         

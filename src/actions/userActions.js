@@ -34,6 +34,7 @@ const createUser = (props,cb) =>{
         
         if(error) {
             console.error(error)
+            console.log(error);
             
             cb(error.message)
         }
@@ -50,9 +51,8 @@ const getUser = (id, cb) =>{
     })
 }
 
-const deleteUser = (props, cb) =>{
-    const {id} = props
-    User.remove({_id:id},(error, docs) => {
+const deleteUser = (id, cb) =>{
+    User.findByIdAndDelete(id,(error, docs) => {
         if(error) cb(error.message)
         else cb(null)
     })

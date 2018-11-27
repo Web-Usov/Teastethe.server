@@ -5,7 +5,7 @@ const user = new Schema(
     {
         name:{
             type:String,
-            required:[true,"Name field must be filled"],
+            required:[true,"Name field required"],
             unique:[true,"Name must be unique"],
             minlength:3,
             maxlength:16
