@@ -1,6 +1,6 @@
 {
-  "name": "Tea.server",
-  "version": "0.2.0-dev",
+  "name": "tea.server",
+  "version": "0.2.2-dev",
   "description": "",
   "main": "index.js",
   "scripts": {
