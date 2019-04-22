@@ -60,7 +60,10 @@ module.exports = (io,socket) =>{
         if(!sUser) return new Error('E-allTeas: User is not authorized')
         teaActions.getAllTeas((error, answer) => {
             if(error) return socket.emit({error})
-            socket.emit('allTeas',{teas:answer})
+            socket.emit('allTeas',{
+                error:null,
+                teas:answer
+            })
         })        
     })
 
