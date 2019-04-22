@@ -1,27 +1,45 @@
-const {io} = require('./server')
-const socketEvents = require('./actions/socketActions')
-const {serverActions, userActions} = require('./actions')
+const express = require('express')
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+const app = express()
 
-// serverActions.deleteAllUsers()
-// userActions.createUser({name:"Vasa", socketID:"12345"},(error,data)=>{
-//     if(error) console.log(error);
-//     else console.log(data)    
-// })
+const routes = require('./routes')
+const {pageNotFound, sendError} = require('./middleware')
+const {SendResponse} = require('./models')
 
+app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
 
-
-io.on('connection', socket => {
-    
-    console.log("Connected",socket.id)
-    
-    socket.on('error', (error) => {
-        console.error(error)      
-    })
-
-    socket.on('disconnect',() => {
-        console.log("Disconnected",socket.id)     
-    })
-
-    socketEvents(io,socket)
-    
+// Cors
+app.use((req,res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        "Access-Control-Allow-Headers", 
+        "Origin, X-Requsted-With, Content-Type, Accpet, Authorization"
+    )
+    if(req.method === "OPTIONS"){
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE')
+        return next(200,"Popka",{})
+    }
+    next()
 })
+
+
+// Routes
+app.use('/room',routes.roomsRouters)
+app.use('/user',routes.userRouters)
+
+app.get('/', (req,res,next) => {
+    res.status(200).json(new SendResponse(req, "Api info", {
+        project:"REST-full API on Node.js",
+        version:"0.0.1",
+        author:"Web Usov"
+    }))  
+})
+
+// Errors
+app.use(pageNotFound)
+app.use(sendError)
+
+module.exports = app

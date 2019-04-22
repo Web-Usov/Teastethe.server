@@ -1,0 +1,1 @@
+exports.toCorrectProps = require('./toCorrectProps')
